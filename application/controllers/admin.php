@@ -15,7 +15,7 @@
                 }
 
                 //$data['adminname']=$_SESSION['name'];
-                $data['adminname']=$this->session->userdata('id');
+                $data['adminname']=$this->session->userdata('name');
                 $this->load->helper('url');
                 $this->load->view('admin',$data);
         	}
@@ -77,8 +77,9 @@
 
         public function agreetoleave(){
             $studentid=$_POST['studentid'];
+            $leaveok=$_POST['leaveok'];
 
-            $sql="UPDATE studentinfo SET leaveok=1 where studentid='".$studentid."'";
+            $sql="UPDATE studentinfo SET leaveok=".$leaveok." where studentid='".$studentid."'";
             $this->load->database();
             $this->db->query($sql);
         }

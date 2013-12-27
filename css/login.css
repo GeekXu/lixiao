@@ -1,17 +1,25 @@
 body {
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 40px;
     padding-left: 80px;
     padding-right: 40px;
-    background-color: #fff;
+    background: #D2EFFF url(../img/hdbg.jpg) repeat-x center top;
 }
 
-.form-signin {
+header{
+    padding-left: 80px;
+}
+
+
+.form-signin {    
     max-width: 250px;
     min-width: 220px;
     padding: 29px 29px 29px;
-    margin: 0 auto 20px;
-    background-color: #f7f7f7;
+    
+    margin: 25px auto 20px;
+    
+    background: #f7f7f7
+    url(../img/loginbox.gif) repeat-x right top;
     border: 1px solid #e5e5e5;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -62,6 +70,15 @@ body {
     margin-bottom:10px; 
 }
 
+
+#footer{
+
+
+    position:absolute; 
+    left:50%; 
+    width:340px; 
+    margin-left:-170px;
+}
 
 
 

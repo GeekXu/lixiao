@@ -7,7 +7,6 @@
 	<title>离校管理</title>
 	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/headroom.min.js"></script>
 	<script type="text/javascript" src="js/jquery.tablesorter.js"></script>
 
 	<!--
@@ -31,13 +30,13 @@
           		<a class="brand" href="index.php/admin"><i class="icon-leaf icon-white"></i> 计算机学院 学生离校系统</a>
           		<div class="nav-collapse collapse">
             		<ul class="nav">
-              			<li class="active"><a href="index.php/admin">主页</a></li>
+              			<li class="active"><a href="index.php/admin"><i class="icon-home"></i>主页</a></li>
               			<!--<li><a href="#about">About</a></li>-->
               			<li><a href="#" id="all">所有学生</a></li>
               			<li><a href="#" id="allleaveok">可离校学生</a></li>
               			<li><a href="#" id="allleave">已离校学生</a></li>
               			<li><a href="#" id="changepsw">修改密码</a></li>
-              			<li><a href="<?php echo site_url("admin/quit")?>" id="quit">退出登录</a></li>
+              			<li><a href="<?php echo site_url("admin/quit")?>" id="quit"><i class="icon-off icon-white"></i> 退出登录</a></li>
             		</ul>
           		</div><!--/.nav-collapse -->
        		</div>
@@ -82,7 +81,7 @@
 			            <td class="leaveok">
 			            	<button name="leavebtn" class="btn btn-labeled btn-primary">
 		        				<span name="leavelabel" class="btn-label"><i name="leaveicon" class="icon-white icon-thumbs-up"></i></span>
-		        				同意离校
+		        				可同意离校
 	        				</button>
 			            </td>
 			        </tr>
@@ -106,6 +105,7 @@
 		</div>
     </div>
 </div>
+
 	<!--
     <div id="footer">
       <div class="container">
@@ -189,12 +189,12 @@
 						var btn=newTr.find("[name=leavebtn]");
 						var icon=newTr.find("[name=leaveicon]");
 
-						btn.removeClass('btn-primary').addClass('btn-info');
+						btn.removeClass('btn-primary').addClass('btn-success');
 						icon.removeClass('icon-thumbs-up').addClass('icon-off');
 						btn.text(' 已同意离校 ');
 						btn.prepend(span);
 					}
-					//else //就算同意离校也有可能论文和项目未通过
+					else //就算同意离校也有可能论文和项目未通过
 					{	
 
 						//论文列
@@ -233,6 +233,19 @@
 							btn.text(' 已通过 ');
 							btn.prepend(span);
 						}
+
+						//同意列
+						if(data[i].paperok==0 || data[i].projectok==0){
+							
+							var span=newTr.find("[name=leavelabel]");
+							var btn=newTr.find("[name=leavebtn]");
+							var icon=newTr.find("[name=leaveicon]");
+
+							btn.removeClass('btn-primary').addClass('disabled');
+							icon.removeClass('icon-thumbs-up').addClass('icon-ban-circle');
+							btn.text(' 不可同意离校 ');
+							btn.prepend(span);
+						}
 					}
 					$('#table-main').append(newTr);
 					newTr.show();
@@ -248,22 +261,39 @@
 
 			$('[name=leavebtn]').click(function(){
 				var $this=$(this);
-				if($this.hasClass('btn-info')){
+				if($this.hasClass('disabled')){
+					return false;
+				}
+				else if($this.hasClass('btn-success')){
 					//alert(1);
 					//已同意离校
+					var span=$this.find("[name=leavelabel]");
+					var icon=$this.find("[name=leaveicon]");
+
+
+					$this.removeClass('btn-success').addClass('btn-primary');
+					icon.removeClass('icon-off').addClass('icon-thumbs-up');
+					$this.text(' 可同意离校 ');
+					$this.prepend(span);
+
+					var studentid=$this.parent().parent()[0].id;
+					//alert(studentid);
+					$.post("<?php echo site_url("admin/agreetoleave")?>",{studentid: studentid, leaveok: 0});
+					$("table").trigger('update');
 				}
 				else{
 					var span=$this.find("[name=leavelabel]");
 					var icon=$this.find("[name=leaveicon]");
 
-					$this.removeClass('btn-primary').addClass('btn-info');
+
+					$this.removeClass('btn-primary').addClass('btn-success');
 					icon.removeClass('icon-thumbs-up').addClass('icon-off');
 					$this.text(' 已同意离校 ');
 					$this.prepend(span);
 
 					var studentid=$this.parent().parent()[0].id;
 					//alert(studentid);
-					$.post("<?php echo site_url("admin/agreetoleave")?>",{studentid: studentid});
+					$.post("<?php echo site_url("admin/agreetoleave")?>",{studentid: studentid, leaveok: 1});
 					$("table").trigger('update');
 
 				}

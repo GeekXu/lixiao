@@ -1,11 +1,10 @@
-<?php
+<?php 
 class login extends CI_Controller {  
     public function index(){
     	//session_start();
 		$this->load->helper('url');
-
 		//if(isset($_SESSION['id'])){
-        if($this->session->userdata('id')!=FALSE){
+        if($this->session->userdata('name')!=FALSE){
 			//$this->load->view('index');
 			//echo "<script>window.location.href='index.php/teacher';</script>";
 			redirect("teacher");
@@ -13,27 +12,24 @@ class login extends CI_Controller {
 		else{
         	$this->load->view('login_view');
 		}
-
-        
     }
 
     public function verify(){
-    	
     	$uname = $_POST['uname'];
     	$psw = $_POST['psw'];
     	
-    	$sql= "SELECT * FROM user WHERE (username='".$uname."' or userid= '".$uname."') and password='".$psw."'";
+    	$sql= "SELECT * FROM user WHERE username='".$uname."' and password='".$psw."'";
 
-    	$this->load->database(); 
+    	$this->load->database();
     	$this->load->helper('url');
 
     	$this->db->where('username',$uname);
     	$query_admin=$this->db->get('admin');
-    	$this->db->where('userid',$uname);
-    	$query_admin_id=$this->db->get('admin');
-    	if($query_admin->num_rows()||$query_admin_id->num_rows()){
+    	//$this->db->where('userid',$uname);
+    	//$query_admin_id=$this->db->get('admin');
+    	if($query_admin->num_rows()){
     		//echo "123123";
-    		$sql="SELECT * FROM admin WHERE (username='".$uname."' or userid= '".$uname."') and password='".$psw."'";
+    		$sql="SELECT * FROM admin WHERE (username='".$uname."' and password='".$psw."'";
     		$query_adminpsw=$this->db->query($sql);
     		if(!$query_adminpsw->num_rows()){
     			echo "{'info':'密码错误！','status':0}";
@@ -50,7 +46,6 @@ class login extends CI_Controller {
 
                 $result=$query_adminpsw->result();
                 $newdata = array(
-                   'id'  => $result[0]->userid,
                    'name'     => $result[0]->username,
                    'admin' => TRUE
                 );
@@ -64,11 +59,11 @@ class login extends CI_Controller {
     	//echo $sql;
 		$this->db->where('username',$uname);
 		$query_user=$this->db->get('user');
-		$this->db->where('userid',$uname);
-    	$query_user_id=$this->db->get('user');
+		//$this->db->where('userid',$uname);
+    	//$query_user_id=$this->db->get('user');
 
 		$query_userpsw=$this->db->query($sql);
-		if(!$query_user->num_rows()&&!$query_user_id->num_rows()){
+		if(!$query_user->num_rows()){
 			echo "{'info':'没有此用户','status':2}";
 		}
 		else if(!$query_userpsw->num_rows()){
@@ -84,15 +79,11 @@ class login extends CI_Controller {
             */
 
             $newdata = array(
-                   'id'  => $result[0]->userid,
                    'name'     => $result[0]->username,
                    'admin' => FALSE
             );
             $this->session->set_userdata($newdata);
-
             echo "{'info':'登录成功！','status':1}";
 		}
     }
-}  
-  
-?>  
+}?>

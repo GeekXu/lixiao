@@ -1,0 +1,117 @@
+body {
+    font-family: "Microsoft YaHei","Tahoma","Verdana","Arial","Helvetica","sans-serif";
+    margin-bottom: 20px;
+    background: #D2EFFF url(../img/hdbg.jpg) repeat-x center top;
+    
+}
+
+.photo {
+    max-height: 160px;
+    border: 1px solid #c5e7c6;
+    margin-left: 30px;
+}
+
+.navbar-inner > .container{
+    margin-left: 200px;
+    margin-top: 10px;
+}
+
+header{
+    width: 900px;
+    padding-top: 20px;
+    margin: auto;
+}
+
+header>.navbar{
+    margin-top: 5px !important; 
+    margin-bottom: 5px !important;
+    color:#000000 !important;
+}
+
+header i{
+   margin-top: 4px !important;
+}
+
+.main-container{
+    width: 900px;
+    margin: 0 auto;
+    margin-top: 0px;
+    padding-top: 20px;
+    background-color: #fff;
+}
+
+.student_info_card{
+    padding-left: 40px;
+}
+
+.studentinfo{
+    list-style:none;
+    float:left;
+
+    width:200px;
+    overflow:hidden;
+
+}
+
+#statistics{
+    border: 1px solid #c5e7c6;
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 96%;
+}
+
+td > button{
+    width: 140px;
+    height: 140px;
+    font-size: 22px !important;
+}
+
+th,td{
+    text-align: center !important;
+}
+
+.submit{
+    margin-top: 40px;
+    text-align: right;
+    width: inherit;
+    padding-right: 45px;
+}
+
+.submit .btn{
+    margin-left: 20px;
+    width: 110px;
+}
+
+.divider{
+    border-bottom: 2px solid #c5e7c6;
+    margin: 10px 0 10px 0px;
+}
+
+.t{
+    font-size: 18px;
+    color: #66A925;
+    margin-left: 30px;
+}
+
+
+#footer{
+
+    /*
+    position:absolute; 
+    left:50%; 
+    width:340px; 
+    margin-left:-170px;
+    */
+
+    width: 360px;
+    padding-left: 300px;
+}
+
+
+#footer>.container{
+    width: inherit;
+}
+
+.controls button{
+    width: 15%;
+}

@@ -1,13 +1,13 @@
-<?php  
-  
-	class teacher extends CI_Controller {  
+<?php
+class teacher extends CI_Controller {  
     	public function index(){
         	//echo "Hello World!";
         	//session_start();
 
         	$this->load->helper("url");
         	//if (isset($_SESSION['id'])) {
-            if($this->session->userdata('id')!=FALSE){
+            if($this->session->userdata('name')!=FALSE){
+                //echo $this->session->userdata('name');
                 //if($_SESSION['admin']==1){
                 if($this->session->userdata('admin')==TRUE){
                     redirect('admin');
@@ -17,16 +17,45 @@
 
                 //$teacherid=$_SESSION['id'];
                 //$teachername=$_SESSION['name'];
-                $teacherid=$this->session->userdata('id');
+                //$teacherid=$this->session->userdata('id');
                 $teachername=$this->session->userdata('name');
 
-                $sql="SELECT * from studentinfo where leaveok=0 and teacherid='".$teacherid."' and teachername='".$teachername."'";
+                $sql="SELECT * from studentinfo where teachername='".$teachername."' and studentdegree='硕士'";
                 //echo $sql;
                 $querydata=$this->db->query($sql);
-                $result=$querydata->result();
+                $studentmaster=$querydata->result();
+                $studentmasterleavenum=0;
+                foreach ($studentmaster as $key => $value) {
+                    if ($value->leaveok == 1) {
+                        # code...
+                        $studentmasterleavenum+=1;
+                    }
+                }
 
-                $data['students']=$result;
-                $data['teachername']=$teachername;
+                $sql="SELECT * from studentinfo where teachername='".$teachername."' and studentdegree='博士'";
+                //echo $sql;
+                $querydata=$this->db->query($sql);
+                $studentphd=$querydata->result();
+                $studentphdleavenum = 0;
+                foreach ($studentphd as $key => $value) {
+                    # code...
+                    if ($value->leaveok == 1) {
+                        # code...
+                        $studentphdleavenum+=1;
+                    }
+                }
+
+                $sql="SELECT * from user where username='".$teachername."' LIMIT 1";
+                $querydata=$this->db->query($sql);
+                $teacherinfo=$querydata->result();
+
+
+                $data['studentmaster']=$studentmaster;
+                $data['studentphd']=$studentphd;
+                $data['studentphdleavenum']=$studentphdleavenum;
+                $data['studentmasterleavenum']=$studentmasterleavenum;
+                $data['teacherinfo']=$teacherinfo;
+
 
                 //echo $result[0]->studentid;
         		$this->load->view("teacher",$data);
@@ -34,19 +63,136 @@
         	else{
         		redirect('login');
         	}
-        	
-		}
+ 		}
 
 		public function modify(){
-			$changetype = $_POST['changetype'];
-            $changeto = $_POST['changeto'];
-            $studentid= $_POST['studentid'];
-            $sql = "UPDATE studentinfo set ".$changetype."=".$changeto." WHERE studentid='".$studentid."'";
-            //echo $sql;
+            $this->load->database();
+			$paperok = $_POST['paperok'];
+            $projectok = $_POST['projectok'];
+            $bisheok = $_POST['bisheok'];
+            $studentid = $_POST['uid'];
+            $teachername=$this->session->userdata('name');
 
-            $this->load->database(); 
-            $this->db->query($sql);
+            $sql = "SELECT * from studentinfo where studentid=".$studentid." and teachername='".$teachername."'";
+            //echo $sql;
+            $querydata = $this->db->query($sql);
+            $result = $querydata->result();
+            if (count($result)==0) {
+                # code...
+                echo "{'status':'-1'}";
+            }
+            else{
+                $sql = "UPDATE studentinfo set paperok=".$paperok." , projectok=".$projectok." , bisheok=".$bisheok." WHERE studentid='".$studentid."'";
+                $querydata = $this->db->query($sql);
+                //$result = $querydata->result();
+                if($querydata==0){
+                    echo "{'status':0}";
+                }
+                else{
+                    echo "{'status':1}";
+                }
+
+                //echo $sql;
+            }
+            
+            //$this->db->query($sql);
 		}
+
+        public function detail(){
+
+            $this->load->helper("url");
+            $this->load->database();
+
+            if($this->session->userdata('name')!=FALSE){
+                //if($_SESSION['admin']==1){
+                if($this->session->userdata('admin')==TRUE){
+                    redirect('admin');
+                    //echo 'jump to admin';
+                }
+            }
+            else{
+                redirect('login');
+                //echo 'jump to login'
+            }
+
+            $studentid=$this->uri->segment(3,0);
+            $teachername=$this->session->userdata('name');
+            //echo $studentid;
+            
+            $sql="SELECT * from studentinfo where studentid=".$studentid." and teachername='".$teachername."'";
+            //echo $sql;
+            if ($studentid) {
+                # code...
+                $querydata=$this->db->query($sql);
+                $studentdetail=$querydata->result();
+
+            }
+            
+            if ($studentid==0 || count($studentdetail)==0) {
+                # code...
+                $this->load->view('studenterror');
+            }
+            else{
+                $data['studentdetail']=$studentdetail[0];
+                $this->load->view('studentdetail',$data);
+            }
+        }
+
+        public function statistics(){
+            $this->load->helper('url');
+            $this->load->database();
+
+            $sql="select username,
+                (select count(studentid) from studentinfo where teachername=username and studentdegree='硕士') as masternum,
+                (select count(studentid) from studentinfo where teachername=username and studentdegree='硕士' and leaveok=1) as masterleavenum,
+                (select count(studentid) from studentinfo where teachername=username and studentdegree='博士') as phdnum,
+                (select count(studentid) from studentinfo where teachername=username and studentdegree='博士' and leaveok=1) as phdleavenum
+                from user order by username
+                ";
+            $querydata=$this->db->query($sql);
+            $result=$querydata->result();
+            //echo $result[0]->username;
+
+            $data['results']=$result;
+            $this->load->view('statistics',$data);
+        }
+
+        public function changepsw(){
+            $this->load->helper("url");
+
+            if($this->session->userdata('name')!=FALSE){
+
+                $this->load->view("changepsw");
+            }
+            else{
+                redirect('login');
+            }
+        }
+
+        public function doChangePsw(){
+            $this->load->database();
+            $teachername=$this->session->userdata('name');
+
+            $OriPsw=$_POST['oriPsw'];
+            $NewPsw=$_POST['newPsw'];
+            $sql="SELECT * from user where username='".$teachername."' and password='".$OriPsw."'";
+            $querydata=$this->db->query($sql);
+            $result=$querydata->result();
+            if (count($result)==0) {
+                echo "{'status':'-1'}";
+                return;
+            }
+
+            $sql="UPDATE user set password='".$NewPsw."' where username='".$teachername."'";
+            $result=$this->db->query($sql);
+            //echo $result;
+            if ($result==0) {
+                echo "{'status':'-1'}";
+            }
+            else{
+                echo "{'status':'1'}";
+            }
+        }
 
         public function quit(){
             $this->load->helper("url");
@@ -59,5 +205,4 @@
 
             redirect('login');
         }
-	}
-?>
+}?>
