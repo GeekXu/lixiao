@@ -16,7 +16,7 @@ header{
     min-width: 220px;
     padding: 29px 29px 29px;
     
-    margin: 25px auto 20px;
+    margin: 0px auto 20px;
     
     background: #f7f7f7
     url(../img/loginbox.gif) repeat-x right top;
@@ -70,15 +70,19 @@ header{
     margin-bottom:10px; 
 }
 
-
 #footer{
-
-
-    position:absolute; 
-    left:50%; 
-    width:340px; 
-    margin-left:-170px;
+    width: 360px;
+    padding-left: 400px;
 }
 
+#footer>.container{
+    width: inherit;
+}
 
+.alert{
+    margin-top: 0px;
+    margin-bottom: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
 

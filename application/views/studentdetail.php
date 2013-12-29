@@ -10,6 +10,7 @@
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 	<link rel="stylesheet" type="text/css" href="css/studentdetail.css"/>
+	<link rel="stylesheet" type="text/css" href="css/all.css"/>
 </head>
 <body>
 	<header>
@@ -42,25 +43,25 @@
 							<span><p>学号：<?php echo $studentdetail->studentid ?></p></span>
 						</li>
 						<li class="studentinfo">
-							<span><p>班级：1 班</p></span>
+							<span><p>班级：<?php echo $studentdetail->class ?> 班</p></span>
 						</li>
 						<li class="studentinfo">
-							<span><p>性别：男</p></span>
+							<span><p>性别：<?php echo $studentdetail->sex ?></p></span>
 						</li>
 						<li class="studentinfo">
-							<span><p>民族：汉</p></span>
+							<span><p>民族：<?php echo $studentdetail->minzu ?></p></span>
 						</li>
 						<li class="studentinfo">
 							<span><p>研究生类：<?php echo $studentdetail->studentdegree ?></p></span>
 						</li>
 						<li class="studentinfo">
-							<span><p>录取专业：计算机科学与技术</p></span>
+							<span><p>录取专业：<?php echo $studentdetail->admitmajor ?></p></span>
 						</li>
 						<li class="studentinfo">
-							<span><p>录取类别：非定向</p></span>
+							<span><p>录取类别：<?php echo $studentdetail->admittype ?></p></span>
 						</li>
 						<li class="studentinfo">
-							<span><p>学制：两年半</p></span>
+							<span><p>学制：<?php echo $studentdetail->xuezhi ?></p></span>
 						</li>
 						<li id="uid" style="display:none;">
 							<?php echo $studentdetail->studentid ?>

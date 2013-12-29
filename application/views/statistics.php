@@ -9,7 +9,14 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="css/studentdetail.css"/>
+    <link rel="stylesheet" type="text/css" href="css/all.css"/>
+	<link rel="stylesheet" type="text/css" href="css/statistics.css"/>
+
+    <!--
+    <link rel="stylesheet" type="text/css" href="css/tablesorter.css"/>
+    <script type="text/javascript" src="js/jquery.tablesorter.js"></script>
+    -->
+
 </head>
 <body>
 	<header>
@@ -29,13 +36,19 @@
 	</header>
 
     <div class="container main-container">
-    	<table id="statistics" class="table table-striped table-boarded">
+        <div class="input-append quick_search">
+            <p> </p>
+            <input id="key" type="text" class="span4" placeholder="快速定位"> 
+            <span class="add-on"><i class="icon-search"></i></input></span>
+            <p> </p>
+        </div>
+    	<table id="statistics_table" class="table table-striped table-boarded <!--tablesorter-->">
     		<thead>
-    			<th>导师</th>
-    			<th>硕士生人数</th>
-    			<th>已离校硕士生人数</th>
-    			<th>博士生人数</th>
-    			<th>已离校博士生人数</th>
+    			<th class="header">导师</th>
+    			<th class="header">硕士生人数</th>
+    			<th class="header">已离校硕士生人数</th>
+    			<th class="header">博士生人数</th>
+    			<th class="header">已离校博士生人数</th>
     		</thead>
     		<tbody>
     			<?php foreach ($results as $key => $value): ?>
@@ -61,7 +74,7 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function(){
-
+            //$(".tablesorter").tablesorter();
 		});
 	</script>
 

@@ -9,7 +9,8 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="css/teacher.css"/>
+	<link rel="stylesheet" type="text/css" href="css/teacher_index.css"/>
+	<link rel="stylesheet" type="text/css" href="css/all.css"/>
 	
 </head>
 <body>

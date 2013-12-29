@@ -1,0 +1,53 @@
+/*
+    所有页面通用的样式
+*/
+
+body {
+    font-family: "Microsoft YaHei","Tahoma","Verdana","Arial","Helvetica","sans-serif";
+    margin-bottom: 20px;
+    background: #D2EFFF url(../img/hdbg.jpg) repeat-x center top;
+}
+
+.navbar-inner > .container{
+    margin-left: 200px;
+    margin-top: 10px;
+}
+
+header{
+    width: 900px;
+    padding-top: 20px;
+    margin: auto;
+}
+
+header>.navbar{
+    margin-top: 5px !important; 
+    margin-bottom: 5px !important;
+    color:#000000 !important;
+}
+
+header i{
+   margin-top: 4px !important;
+}
+
+.main-container{
+    width: 900px;
+    margin: 0 auto;
+    margin-top: 0px;
+    padding-top: 20px;
+    background-color: #fff;
+}
+
+.divider{
+    border-bottom: 2px solid #c5e7c6;
+    margin: 10px 0 10px 0px;
+}
+
+#footer .container{
+    width: inherit;
+}
+
+#footer p{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}

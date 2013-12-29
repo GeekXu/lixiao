@@ -142,6 +142,7 @@ class teacher extends CI_Controller {
             $this->load->helper('url');
             $this->load->database();
 
+            /*
             $sql="select username,
                 (select count(studentid) from studentinfo where teachername=username and studentdegree='硕士') as masternum,
                 (select count(studentid) from studentinfo where teachername=username and studentdegree='硕士' and leaveok=1) as masterleavenum,
@@ -149,12 +150,38 @@ class teacher extends CI_Controller {
                 (select count(studentid) from studentinfo where teachername=username and studentdegree='博士' and leaveok=1) as phdleavenum
                 from user order by username
                 ";
-            $querydata=$this->db->query($sql);
-            $result=$querydata->result();
+            $result=$this->db->query($sql)->result();
+            */
+            $sql="select username,(select count(studentid) from studentinfo where teachername=username and studentdegree='硕士') as masternum from user order by username";
+            $result=$this->db->query($sql)->result();
+
             //echo $result[0]->username;
+
+            
+            $sql="select username,(select count(studentid) from studentinfo where teachername=username and studentdegree='硕士' and leaveok=1) as masterleavenum from user order by username";
+            $result2=$this->db->query($sql)->result();
+
+            $sql="select username,(select count(studentid) from studentinfo where teachername=username and studentdegree='博士') as phdnum from user order by username";
+            $result3=$this->db->query($sql)->result();
+
+            $sql="select username,(select count(studentid) from studentinfo where teachername=username and studentdegree='博士' and leaveok=1) as phdleavenum from user order by username";
+            $result4=$this->db->query($sql)->result();
+
+            $length=count($result);
+            for ($i=0; $i < $length; $i++) {
+                /*
+                //for test 
+                if($result[$i]->username != $result4[$i]->username)
+                    echo "123123123";
+                */
+                $result[$i]->masterleavenum=$result2[$i]->masterleavenum;
+                $result[$i]->phdnum=$result3[$i]->phdnum;
+                $result[$i]->phdleavenum=$result4[$i]->phdleavenum;
+            }            
 
             $data['results']=$result;
             $this->load->view('statistics',$data);
+            
         }
 
         public function changepsw(){

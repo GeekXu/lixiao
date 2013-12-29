@@ -1,0 +1,47 @@
+.photo {
+    max-height: 160px;
+    margin-left: 30px;
+}
+
+.list-body{
+    margin: 0 auto;
+    padding-left: 40px;
+    width:900px;
+}
+
+.student_info{
+    float: left;
+    margin-top: 5px;
+    line-height: 30px;
+    width: 120px;
+    text-align: center;
+}
+
+.student_pic{
+    float:left;
+    width:90px; 
+    height:90px; 
+    margin:0 0px 0 0;
+    max-height: 75px;
+    max-width: 75px;
+}
+
+.student{
+    list-style:none;
+    float:left;
+    padding:10px 0 0 10px;;
+    margin:15px 30px 0px 0px;
+    width:240px;
+    overflow:hidden;
+    height:90px;
+    /*
+    border: 2px solid #c5e7c6;
+    */
+    text-align: center;
+}
+
+.t{
+    font-size: 18px;
+    color: #66A925;
+    margin-left: 30px;
+}

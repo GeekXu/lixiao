@@ -1,0 +1,15 @@
+#statistics_table{
+    border: 1px solid #c5e7c6;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 90%;
+}
+
+.quick_search{
+    margin-left: 80px;
+}
+
+th,td{
+    text-align: center !important;
+}

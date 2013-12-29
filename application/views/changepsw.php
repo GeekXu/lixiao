@@ -9,7 +9,8 @@
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-	<link rel="stylesheet" type="text/css" href="css/studentdetail.css"/>
+	<link rel="stylesheet" type="text/css" href="css/changepsw.css"/>
+	<link rel="stylesheet" type="text/css" href="css/all.css"/>
 </head>
 <body>
 	<header>
