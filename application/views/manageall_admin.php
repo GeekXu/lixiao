@@ -18,8 +18,8 @@
 	      	<div class="navbar-inner">
           		<div class="nav-collapse collapse">
             		<ul class="nav">
-              			<li class="active"><a href="index.php/admin"><i class="icon-home"></i> 主页</a></li>
-              			<li><a href="index.php/admin/manageall"><i class="icon-list"></i> 管理所有学生</a></li>
+              			<li><a href="index.php/admin"><i class="icon-home"></i> 主页</a></li>
+              			<li class="active"><a href="index.php/admin/manageall"><i class="icon-list"></i> 管理所有学生</a></li>
               			<li><a href="index.php/admin/changepsw" id="changepsw"><i class="icon-wrench"></i> 修改密码</a></li>
               			<li><a href="index.php/admin/quit" id="quit"><i class="icon-off"></i> 退出登录</a></li>
               		</ul>
@@ -29,7 +29,7 @@
 	</header>
 
     <div class="container main-container">
-    	<p>抱歉，这个学生不在您的实验室，请检查操作是否有误并重试</p>
+    	<p>抱歉，功能尚未开通</p>
     </div>
 
 

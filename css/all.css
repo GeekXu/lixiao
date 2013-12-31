@@ -30,7 +30,7 @@ header i{
 }
 
 .main-container{
-    width: 900px;
+    width: 900px !important;
     margin: 0 auto;
     margin-top: 0px;
     padding-top: 20px;

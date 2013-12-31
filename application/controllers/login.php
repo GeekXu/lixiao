@@ -29,7 +29,7 @@ class login extends CI_Controller {
     	//$query_admin_id=$this->db->get('admin');
     	if($query_admin->num_rows()){
     		//echo "123123";
-    		$sql="SELECT * FROM admin WHERE (username='".$uname."' and password='".$psw."'";
+    		$sql="SELECT * FROM admin WHERE username='".$uname."' and password='".$psw."'";
     		$query_adminpsw=$this->db->query($sql);
     		if(!$query_adminpsw->num_rows()){
     			echo "{'info':'密码错误！','status':0}";

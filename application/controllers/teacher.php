@@ -66,6 +66,12 @@ class teacher extends CI_Controller {
  		}
 
 		public function modify(){
+
+            if($this->session->userdata('name')==FALSE || $this->session->userdata('admin')==TRUE){
+                echo "{'status':-1,'info':'error, dont hack'}";
+                return ;
+            }
+
             $this->load->database();
 			$paperok = $_POST['paperok'];
             $projectok = $_POST['projectok'];
@@ -102,6 +108,8 @@ class teacher extends CI_Controller {
 
             $this->load->helper("url");
             $this->load->database();
+
+
 
             if($this->session->userdata('name')!=FALSE){
                 //if($_SESSION['admin']==1){
@@ -141,6 +149,10 @@ class teacher extends CI_Controller {
         public function statistics(){
             $this->load->helper('url');
             $this->load->database();
+
+            if($this->session->userdata('name')==FALSE){
+                redirect('login');
+            }
 
             /*
             $sql="select username,
@@ -198,6 +210,12 @@ class teacher extends CI_Controller {
 
         public function doChangePsw(){
             $this->load->database();
+            if($this->session->userdata('name')==FALSE || $this->session->userdata('admin')==true ){
+                echo "{'status':-1,'info':'error, dont hack'}";
+                return ;
+                //redirect('login');
+            }
+
             $teachername=$this->session->userdata('name');
 
             $OriPsw=$_POST['oriPsw'];

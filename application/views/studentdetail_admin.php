@@ -19,10 +19,10 @@
 	      	<div class="navbar-inner">
           		<div class="nav-collapse collapse">
             		<ul class="nav">
-              			<li class="active"><a href="index.php/teacher"><i class="icon-home "></i> 主页</a></li>
-              			<li><a href="index.php/teacher/statistics"><i class="icon-list "></i> 离校情况统计</a></li>
-              			<li><a href="index.php/teacher/changepsw" id="changepsw"><i class="icon-wrench "></i> 修改密码</a></li>
-              			<li><a href="<?php echo site_url("teacher/quit")?>" id="quit"><i class="icon-off "></i> 退出登录</a></li>
+              			<li class="active"><a href="index.php/admin"><i class="icon-home "></i> 主页</a></li>
+              			<li><a href="index.php/admin/manageall"><i class="icon-list "></i> 管理所有学生</a></li>
+              			<li><a href="index.php/admin/changepsw" id="changepsw"><i class="icon-wrench "></i> 修改密码</a></li>
+              			<li><a href="<?php echo site_url("admin/quit")?>" id="quit"><i class="icon-off "></i> 退出登录</a></li>
             		</ul>
           		</div>
 	      	</div>
@@ -42,6 +42,9 @@
 					<ul class="studentinfolist">
 						<li class="studentinfo">
 							<span><p>学号：<?php echo $studentdetail->studentid ?></p></span>
+						</li>
+						<li class="studentinfo">
+							<span><p>导师：<a href="index.php/admin/teacher/<?php echo $studentdetail->teachername ?>"><?php echo $studentdetail->teachername ?></p></a></span>
 						</li>
 						<li class="studentinfo">
 							<span><p>班级：<?php echo $studentdetail->class ?> 班</p></span>
@@ -95,7 +98,7 @@
   								else
   									echo "btn-danger";
   							?>
-  							">
+  							" >
   							<?php 
   								if($studentdetail->bisheok)
   									echo "已通过";
@@ -112,7 +115,7 @@
 								else
 									echo "btn-danger";
   							?>
-  							">
+  							" >
   							<?php 
   								if($studentdetail->projectok)
   									echo "已通过";
@@ -129,7 +132,7 @@
   								else
   									echo "btn-danger";
   							?>
-  							">
+  							" >
   							<?php 
   								if($studentdetail->paperok)
   									echo "已通过";
@@ -145,9 +148,11 @@
   									echo "btn-success";
   								else
   									echo "btn-danger";
-  							?>
-  							"
-  							>
+  							?>" <?php 
+  								if(!$studentdetail->paperok || !$studentdetail->projectok ||!$studentdetail->bisheok)
+  									echo "disabled";
+
+  							?>>
   							<?php 
   								if($studentdetail->leaveok)
   									echo "已通过";
@@ -188,13 +193,16 @@
 				$.post("<?php echo site_url("teacher/quit")?>");
 				return false;
 			})
-			*/
+			
 
+			$(':disabled').click(function(){
+				return false;
+			})
+			*/
 			$('td > button').click(function(){
 				$this=$(this);
-				if ($this.attr('id')=='leaveok') {
+				if($this.attr('id')!="leaveok")
 					return;
-				};
 				if ($this.hasClass('btn-danger')) {
 					$this.removeClass('btn-danger').addClass('btn-success');
 					$this.text('已通过');
@@ -206,18 +214,25 @@
 			})
 
 			$('#return').click(function(){
-				window.location="<?php echo base_url()?>index.php/teacher";
+				window.location="<?php echo base_url()?>index.php/admin/teacher/<?php echo $studentdetail->teachername ?>";
 			})
 
 			$('#modify').click(function(){
-				var paperok,projectok,bisheok,uid;
+
+				var paperok,projectok,bisheok,leaveok,uid;
 				paperok=$('#paperok').hasClass('btn-success');
 				projectok=$('#projectok').hasClass('btn-success');
 				bisheok=$('#bisheok').hasClass('btn-success');
+				leaveok=$('#leaveok').hasClass('btn-success');
 				uid=$('#uid').text();
 
-				$.post("index.php/teacher/modify", 
-					{paperok: paperok, projectok: projectok, bisheok: bisheok, uid: uid}, 
+				if (!paperok || !projectok || !bisheok) {
+					alert('老师尚未完全同意！');
+					return false;
+				};
+
+				$.post("<?php echo base_url()?>index.php/admin/modify/<?php echo $studentdetail->studentid ?>", 
+					{leaveok: leaveok, uid: uid}, 
 					function(d){
 						d=eval('('+d+')');
 						if(d.status === undefined)
@@ -225,14 +240,15 @@
 						
 						//alert(d);
 						if (d.status==-1) {
-							alert('提交失败，该学生不在您的实验室，请检查。');
+							alert('修改失败，不要黑我！');
 							return;
 						}
 						else if (d.status==0) {
-							alert('未知原因失败，请重试，如果重复出现此条信息请联系管理员。');
+							alert('修改失败！可能是老师未通过');
 						}
 						else if(d.status==1){
-							window.location="<?php echo base_url()?>index.php/teacher";
+							//window.location="<?php echo base_url()?>/index.php/teacher";
+							window.location="<?php echo base_url()?>index.php/admin/teacher/<?php echo $studentdetail->teachername ?>";
 						}
 						else{
 							alert('未知原因失败，请重试，如果重复出现此条信息请联系管理员。');

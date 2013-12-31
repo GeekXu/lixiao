@@ -15,104 +15,64 @@
 	-->
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
 	<link rel="stylesheet" type="text/css" href="css/tablesorter.css"/>
-	<link rel="stylesheet" type="text/css" href="css/login.css"/>
+	<link rel="stylesheet" type="text/css" href="css/all.css"/>
+	<link rel="stylesheet" type="text/css" href="css/admin.css"/>
 </head>
 <body>
-	<div class="wrap">
-	<div class="navbar navbar-inverse navbar-fixed-top">
-      	<div class="navbar-inner">
-        	<div class="container">
-          		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            		<span class="icon-bar"></span>
-            		<span class="icon-bar"></span>
-            		<span class="icon-bar"></span>
-          		</button>
-          		<a class="brand" href="index.php/admin"><i class="icon-leaf icon-white"></i> 计算机学院 学生离校系统</a>
+    <header>
+		<img class="headlogo" src="img/logo.png"/>
+		<div class="navbar">
+	      	<div class="navbar-inner">
           		<div class="nav-collapse collapse">
             		<ul class="nav">
-              			<li class="active"><a href="index.php/admin"><i class="icon-home"></i>主页</a></li>
-              			<!--<li><a href="#about">About</a></li>-->
-              			<li><a href="#" id="all">所有学生</a></li>
-              			<li><a href="#" id="allleaveok">可离校学生</a></li>
-              			<li><a href="#" id="allleave">已离校学生</a></li>
-              			<li><a href="#" id="changepsw">修改密码</a></li>
-              			<li><a href="<?php echo site_url("admin/quit")?>" id="quit"><i class="icon-off icon-white"></i> 退出登录</a></li>
-            		</ul>
-          		</div><!--/.nav-collapse -->
-       		</div>
-      	</div>
-    </div>
+              			<li class="active"><a href="index.php/admin"><i class="icon-home"></i> 主页</a></li>
+              			<li><a href="index.php/admin/manageall"><i class="icon-list"></i> 管理所有学生</a></li>
+              			<li><a href="index.php/admin/changepsw" id="changepsw"><i class="icon-wrench"></i> 修改密码</a></li>
+              			<li><a href="index.php/admin/quit" id="quit"><i class="icon-off"></i> 退出登录</a></li>
+              		</ul>
+          		</div>	
+	      	</div>
+	    </div>
+	</header>
 
-    <div class="container">
+    <div class="container main-container">
+
     	<h2><?php echo $adminname ?> 管理员：</h2>
+    	<div class="input-append quick_search">
+            <p> </p>
+            <input id="key" type="text" class="span4" placeholder="快速定位">
+            <span class="add-on"><i class="icon-search"></i></input></span>
+            <p> </p>
+        </div>
 
-	    <div class="input-append">
-    		<p> </p>
-    		<input id="key" type="text" class="span3" placeholder="姓名"> 
-        	<button type="button" class="btn btn-primary" id="search_stu">
-        		<!--<span class="btn-label"><i class="icon-search"></i></span>-->
-        		<i class="icon-white icon-search"></i> 搜索学生
-        	</button>
-        	<button type="button" class="btn" id="search_tea">
-        		<!--<span class="btn-label"><i class="icon-search"></i></span>-->
-        		<i class="icon-search"></i> 搜索老师
-        	</button>
-		</div>
-		<div class="search-result">
-			</br>
-			<p id="result-title"></p>
-			<table id="moban" style="display:none">
-				<tr id="00000000">
-			            <td class="studentid">学号</td>
-			            <td class="studentname">姓名</td>
-			            <td class="teachername">老师</td>
-			            <td class="paperok">
-			            	<button name="paperbtn" class="btn btn-labeled btn-success">
-		        				<span name="paperlabel" class="btn-label"><i name="papericon" class="icon-white icon-ok"></i></span>
-		        				已通过
-	        				</button>
-			            </td>
-			            <td class="projectok">
-			            	<button name="projectbtn" class="btn btn-labeled btn-success">
-		        				<span name="projectlabel" class="btn-label"><i name="projecticon" class="icon-white icon-ok"></i></span>
-		        				已通过
-	        				</button>
-			            </td>
-			            <td class="leaveok">
-			            	<button name="leavebtn" class="btn btn-labeled btn-primary">
-		        				<span name="leavelabel" class="btn-label"><i name="leaveicon" class="icon-white icon-thumbs-up"></i></span>
-		        				可同意离校
-	        				</button>
-			            </td>
-			        </tr>
-			</table>
-
-			<table class="table table-striped tablesorter" id="table">
-		        <thead>
-		          <tr>
-		            <th class="header"> &nbsp;&nbsp;&nbsp;学号 </th>
-		            <th class="header"> &nbsp;&nbsp;&nbsp;姓名 </th>
-		            <th class="header"> &nbsp;&nbsp;&nbsp;老师 </th>
-		            <th class="header"> &nbsp;&nbsp;&nbsp;论文是否已经通过 </th>
-		            <th class="header"> &nbsp;&nbsp;&nbsp;项目是否已经交接 </th>
-		            <th class="header"> &nbsp;&nbsp;&nbsp;是否同意离校 </th>
-		          </tr>
-		        </thead>
-		        <tbody id="table-main">
-			        
-		      	</tbody>
-	    	</table>
-		</div>
+    	<table id="statistics_table" class="table table-striped table-boarded <!--tablesorter-->">
+    		<thead>
+    			<th class="header">导师</th>
+    			<th class="header">硕士生人数</th>
+    			<th class="header">已离校硕士生人数</th>
+    			<th class="header">博士生人数</th>
+    			<th class="header">已离校博士生人数</th>
+    		</thead>
+    		<tbody>
+    			<?php foreach ($results as $key => $value): ?>
+    			<tr>
+    				<td><a href="index.php/admin/teacher/<?php echo $value->username ?>"><?php echo $value->username ?></a></td>
+    				<td><?php echo $value->masternum ?></td>
+    				<td><?php echo $value->masterleavenum ?></td>
+    				<td><?php echo $value->phdnum ?></td>
+    				<td><?php echo $value->phdleavenum ?></td>
+    			</tr>
+    			<?php endforeach;?>
+    		</tbody>
+    	</table>
+    	<div id="footer">
+	      	<div class="container">
+		      	<br/>
+		        <p class="muted credit">©版权所有 2005-2014 <a href="http://cs.bit.edu.cn/">北京理工大学计算机学院</a></p>
+	      	</div>
+	    </div>
     </div>
 </div>
-
-	<!--
-    <div id="footer">
-      <div class="container">
-        <p class="muted credit">©版权所有 2005-2014 <a href="http://cs.bit.edu.cn/">北京理工大学计算机学院</a></p>
-      </div>
-    </div>
--->
 
 	
 	<script type="text/javascript">
@@ -344,15 +304,13 @@
 					return false;
 				}
 				*/
-				if(!hasData)
-					return false;
-				var key=$('#key').val();
+				var key=$(this).val();
 				//if (!key)
 				//	key='';
 				key=key.replace(' ','');
 
 
-				$('#table-main tr').each(function(){
+				$('#statistics_table tbody tr').each(function(){
 					
 					var $this=$(this);
 					var id=$this.children()[0].innerText;

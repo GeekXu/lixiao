@@ -166,7 +166,7 @@
 							$('.alert').show();
 							updatebind();
 						}
-						else if(d.status==3){
+						else if(d.status==3||d.status==0){
 							/*
 							$('#login_psw').grumble({
 								text: '密码错误!', 

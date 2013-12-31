@@ -38,7 +38,7 @@
     <div class="container main-container">
         <div class="input-append quick_search">
             <p> </p>
-            <input id="key" type="text" class="span4" placeholder="快速定位"> 
+            <input id="key" type="text" class="span4" placeholder="快速定位">
             <span class="add-on"><i class="icon-search"></i></input></span>
             <p> </p>
         </div>
@@ -76,6 +76,23 @@
 		$(document).ready(function(){
             //$(".tablesorter").tablesorter();
 		});
+
+        $('#key').on('input propertychange', function(){
+            var key=$('#key').val();
+            key=key.replace(' ','');
+
+            $('#statistics_table tbody tr').each(function(){
+                
+                var $this=$(this);
+                var name=$this.children()[0].innerText;
+                if (name.indexOf(key) == -1) {
+                    $this.hide();
+                }
+                else{
+                    $this.show();
+                }
+            })
+        });
 	</script>
 
 </body>

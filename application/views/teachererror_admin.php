@@ -29,7 +29,7 @@
 	</header>
 
     <div class="container main-container">
-    	<p>抱歉，这个学生不在您的实验室，请检查操作是否有误并重试</p>
+    	<p>抱歉，老师不存在，请检查操作是否有误并重试</p>
     </div>
 
 
